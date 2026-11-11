@@ -1,0 +1,60 @@
+# Student Marks Database (MySQL)
+
+A beginner-friendly SQL project that models a college's students, subjects, and marks. It is built to practice `JOIN`, `GROUP BY`, `HAVING`, subqueries, and aggregate functions.
+
+## Database Design
+
+Three tables. `MARKS` is a junction table that links students and subjects (a many-to-many relationship).
+
+```
+STUDENT (1) ──< (N) MARKS (N) >── (1) SUBJECT
+```
+
+| Table   | Columns                                              | Keys                                           |
+|---------|------------------------------------------------------|------------------------------------------------|
+| STUDENT | ROLL_NO, NAME, CLASS, AGE                            | PK: ROLL_NO                                    |
+| SUBJECT | SUBJECT_ID, SUBJECT_NAME                             | PK: SUBJECT_ID                                 |
+| MARKS   | STUDENT_ROLL_NO, SUBJECT_ID, MARKS_OBTAINED          | PK: (STUDENT_ROLL_NO, SUBJECT_ID), two FKs     |
+
+**Design choices**
+- Subjects are rows, not columns, so `GROUP BY SUBJECT_ID` works and new subjects need no schema change.
+- Pass/fail is not stored. It is calculated from marks (pass mark = 35).
+- The composite primary key allows only one mark per student per subject.
+
+## Sample Data
+- 35 students (class 11 and 12)
+- 4 subjects: English, Maths, Science, History
+- 140 marks rows, including a few failing marks for testing
+
+## Files
+
+| File           | Purpose                                   |
+|----------------|-------------------------------------------|
+| `students.sql` | Creates and fills the STUDENT table       |
+| `subject.sql`  | Creates and fills the SUBJECT table       |
+| `marks.sql`    | Creates and fills the MARKS table         |
+| `queries.sql`  | Practice queries                          |
+
+## How to Run
+
+1. Install MySQL and MySQL Workbench.
+2. Create the database: `CREATE DATABASE COLLEGE;`
+3. Run the files **in this order** (foreign keys depend on it):
+   1. `students.sql`
+   2. `subject.sql`
+   3. `marks.sql`
+4. Run any query from `queries.sql`.
+
+## Queries Covered
+
+- Average marks per subject
+- Topper per subject (subquery with `MAX()`)
+- Students who failed any subject (`HAVING MIN(...) < 35`)
+
+## Concepts Practiced
+
+`JOIN` · `GROUP BY` · `HAVING` · `MAX / MIN / AVG / COUNT` · subqueries · primary and foreign keys · composite keys
+
+## Author
+
+Tushar Kushwaha, BSc Physical Science with Computer Science, Deshbandhu College, Delhi
